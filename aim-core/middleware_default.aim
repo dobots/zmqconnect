@@ -10,5 +10,5 @@
 
 # Default middleware to be used, it can be:
 #   standard, yarp, ros, zeromq, nodejs
-middleware=standard
+middleware=zeromq
 
