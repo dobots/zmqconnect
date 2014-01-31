@@ -45,7 +45,7 @@ typedef std::vector<int> long_seq;
  * the host something like "127.0.0.1" or "dev.almende.com" (that is resolvable by dns), "port" is a TCP/UDP port, and
  * "pid" is the process identifier.
  */
-typedef struct psn_record_t {
+typedef struct pns_record_t {
   std::string name;
   std::string host;
   std::string port;
@@ -98,9 +98,11 @@ protected:
   zmq::socket_t* GetSocket(std::string name);
 
 public:
+  // Default constructor
   zmqconnectModule();
   
-  ~zmqconnectModule();
+  // Default destructor
+  virtual ~zmqconnectModule();
   
   // Extend this with your own code, first call zmqconnectModule::Init(name);
   void Init(std::string& name);
@@ -109,7 +111,7 @@ public:
   inline Param *GetParam() { return cliParam; }
   
   // Overwrite this function with your own code
-  virtual void Tick() {}
+  virtual void Tick() = 0;
   
   // Overwrite this function with your own code
   bool Stop() { return false; }

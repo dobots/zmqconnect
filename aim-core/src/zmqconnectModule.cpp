@@ -69,7 +69,6 @@ void zmqconnectModule::Init(std::string & name) {
 void zmqconnectModule::readCommands() {
   while (true) {
     HandleCommand();
-    sleep(1);
   }
 }
 
@@ -170,8 +169,8 @@ char* zmqconnectModule::GetReply(zmq::socket_t *s, bool & state, bool blocking, 
 
 void zmqconnectModule::SendRequest(zmq::socket_t *s, bool & state, bool blocking, std::string str) {
   if (state) {
-    zmq::message_t request(str.size()+1);
-    memcpy((void *) request.data(), str.c_str(), str.size()+1);
+    zmq::message_t request(str.size());
+    memcpy((void *) request.data(), str.c_str(), str.size());
     if (debug) std::cout << "Send request: " << str << std::endl;
     if (blocking)
       state = s->send(request);
