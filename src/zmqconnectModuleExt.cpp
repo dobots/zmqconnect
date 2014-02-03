@@ -57,8 +57,8 @@ void zmqconnectModuleExt::Tick() {
 	char send [len+1];
 	memcpy(send+1, (void*)msg.c_str(), msg.size());
 	send[0] = 0x01; // prepend command, 0x01 means "CONNECT"
-	send[len+1] = '\0';
-	std::cout << "Send message " << std::string(send+1) << std::endl;
+	//send[len+1] = '\0';
+	std::cout << "Send message " << std::string(send+1, len) << std::endl;
 
 	// get first the pid to construct the name of the control port
 	pns_record record;
@@ -79,7 +79,7 @@ void zmqconnectModuleExt::Tick() {
 
 	success = true; // previously cycle of send-receive initialized to success=true
 	bool blocking = true;
-	SendRequest(cmdc_socket, success, blocking, send);
+	SendRequest(cmdc_socket, success, blocking, std::string(send, len+1));
 	if (success) {
 		std::cout << "Send successfully" << std::endl;
 		ack_received = true;
